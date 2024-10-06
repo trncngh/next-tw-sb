@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from './Button';
+import { Button } from './Button'
 
 const meta = {
   component: Button,
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    backgroundColor: "#000000",
-    label: "label"
-  }
-};
+    backgroundColor: '#000000',
+    label: 'label',
+  },
+}
