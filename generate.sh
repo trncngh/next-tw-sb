@@ -55,15 +55,29 @@ mkdir -p "$target_directory/$folder_name"
 # Copy all files and subfolders from the selected boilerplate folder to the new folder
 cp -r "$selected_dir"/* "$target_directory/$folder_name"
 
-# Replace placeholders with the folder name in copied files
-for file in "$folder_name"/*; do
-    sed -i "s/{{fileName}}/$folder_name/g" "$file"
-done
+# Function to recursively rename files to match the folder name while preserving everything after the first dot
+rename_files_recursively() {
+    local current_dir="$1"
+    local folder_name="$2"
+    
+    # Iterate through files and directories in the current folder
+    for item in "$current_dir"/*; do
+        if [ -d "$item" ]; then
+            # Recursively rename files in subfolders
+            rename_files_recursively "$item" "$folder_name"
+        else
+            # Replace placeholders in file content
+            sed -i "s/{{fileName}}/$folder_name/g" "$item"
+            
+            # Preserve everything after the first dot in the filename
+            new_name="${item#*/}"
+            new_extension="${new_name#*.}"
+            mv "$item" "${current_dir}/${folder_name}.${new_extension}"
+        fi
+    done
+}
 
-# Rename all files to follow the folder name but keep their extensions
-for file in "$folder_name"/*; do
-    extension="${file#*.}" # Extract file extension
-    mv "$file" "$folder_name/$folder_name.$extension"
-done
+# Call the recursive renaming function for the newly created folder
+rename_files_recursively "$target_directory/$folder_name" "$folder_name"
 
 echo "Boilerplate copied to $folder_name with files renamed to $folder_name with their respective extensions."
