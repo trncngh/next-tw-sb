@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Check if folder_name argument is provided
+if [ -z "$1" ]; then
+    read -p "No folder name provided. Please enter the folder name: " folder_name
+else
+    # Use the provided folder name to create the new folder and files
+    folder_name="$1"
+fi
+
 # Display directories and prompt for selection
 select_directory() {
     local parent_dir="$1"
@@ -44,10 +52,6 @@ if [ ! -d "$target_directory" ]; then
     echo "Target directory does not exist. Please provide a valid directory."
     exit 1
 fi
-
-# Prompt user for folder name (file name will follow the folder name)
-read -p "Enter the folder name: " folder_name
-
 
 # Create the new folder using the provided folder name in the target directory
 mkdir -p "$target_directory/$folder_name"
