@@ -34,6 +34,8 @@ const preview: Preview = {
       attributeName: 'data-mode',
     }),
   ],
+
+  tags: ['autodocs']
 }
 
 export default preview

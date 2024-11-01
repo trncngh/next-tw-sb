@@ -1,10 +1,11 @@
 type T{{fileName}}Props = {
+    
 }
 
 
-const {{fileName}} = ({}: T{{fileName}}Props) => {
+const {{fileName}} = ({className = ''}: T{{fileName}}Props & {className?: string}) => {
     return (
-        <div>{{fileName}}</div>
+        <div className={`${className}`}>{{fileName}}</div>
     )
 }
 
